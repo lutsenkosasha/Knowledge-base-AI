@@ -27,8 +27,8 @@
         <addForeignKeyConstraint
                 baseTableName="administrator"
                 baseColumnNames="user_id"
-                referencedTableName="users"
-                referencedColumnNames="id"
+                referencedTableName="user"
+                referencedColumnNames="user_id"
                 constraintName="fk_admin_user"/>
 
         <addForeignKeyConstraint

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20250411076000" author="ilya.kulishkin">
+        <createTable tableName="session">
+            <column name="session_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="directory_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="session"
+                baseColumnNames="user_id"
+                referencedTableName="user"
+                referencedColumnNames="user_ID"
+                constraintName="fk_session_user"/>
+
+        <addForeignKeyConstraint
+                baseTableName="session"
+                baseColumnNames="message_id"
+                referencedTableName="message"
+                referencedColumnNames="message_id"
+                constraintName="fk_session_message"/>
+
+        <addForeignKeyConstraint
+                baseTableName="session"
+                baseColumnNames="directory_id"
+                referencedTableName="directory"
+                referencedColumnNames="directory_id"
+                constraintName="fk_session_directory"/>
+    </changeSet>
+</databaseChangeLog>
