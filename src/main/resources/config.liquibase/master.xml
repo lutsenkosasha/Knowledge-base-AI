@@ -8,5 +8,6 @@
     <include file="changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="true"/>
     <include file="changelog/20250411074000_added_entity_Administrator.xml" relativeToChangelogFile="true"/>
     <include file="changelog/20221127080100_added_entity_Auto.xml" relativeToChangelogFile="true"/>
-
+    <include file="changelog/20250411078000_added_entity_directory.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20250411079000_added_entity_file.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
