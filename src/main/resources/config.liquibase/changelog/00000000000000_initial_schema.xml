@@ -10,16 +10,16 @@
     </changeSet>
 
     <changeSet id="00000000000001" author="alexandr.lutsenko">
-        <createTable tableName="User">
-            <column name="User_ID" type="INT">
+        <createTable tableName="user">
+            <column name="user_ID" type="INT">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="E_mail" type="VARCHAR(255)"/>
-            <column name="Password" type="VARCHAR(255)"/>
-            <column name="Name" type="VARCHAR(100)"/>
-            <column name="Surname" type="VARCHAR(100)"/>
-            <column name="Department" type="VARCHAR(100)"/>
-            <column name="Post" type="VARCHAR(100)"/>
+            <column name="e_mail" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(100)"/>
+            <column name="surname" type="VARCHAR(100)"/>
+            <column name="department" type="VARCHAR(100)"/>
+            <column name="post" type="VARCHAR(100)"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>
