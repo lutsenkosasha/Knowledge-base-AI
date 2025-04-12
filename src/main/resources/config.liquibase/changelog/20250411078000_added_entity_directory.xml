@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20250411078000" author="ekaterina.panina">
+        <createTable tableName="directory">
+            <column name="directory_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="file_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="directory_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="directory_size" type="bigint" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="count_files" type="int" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="department" type="varchar(255)">
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="directory"
+                baseColumnNames="file_id"
+                referencedTableName="file"
+                referencedColumnNames="file_id"
+                constraintName="fk_directory_file"/>
+    </changeSet>
+</databaseChangeLog>
