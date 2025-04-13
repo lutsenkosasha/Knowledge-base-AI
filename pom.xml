@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.example</groupId>
-  <artifactId>Knowledge-base-IO</artifactId>
+  <artifactId>Knowledge-base-Ai</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>Knowledge-base-IO</name>
+  <name>Knowledge-base-AI</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -69,8 +69,8 @@
         <configuration>
           <propertyFile>src/main/resources/liquibase.properties</propertyFile>
           <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
-          <url>jdbc:h2:mem:my_database</url>
-          <username>sa</username>
+          <url>jdbc:postgresql://localhost:5432/Knowledge-base-AI</url>
+          <username>postgres</username>
           <password></password>
         </configuration>
       </plugin>
