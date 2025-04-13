@@ -25,7 +25,7 @@
                 baseTableName="session"
                 baseColumnNames="user_id"
                 referencedTableName="user"
-                referencedColumnNames="user_ID"
+                referencedColumnNames="user_id"
                 constraintName="fk_session_user"/>
 
         <addForeignKeyConstraint
