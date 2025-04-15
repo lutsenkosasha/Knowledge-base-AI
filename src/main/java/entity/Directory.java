@@ -1,4 +1,4 @@
 package entity;
 
-public class Directory {
+public class Directory extends Auditable {
 }

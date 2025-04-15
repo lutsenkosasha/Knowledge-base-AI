@@ -1,9 +1,9 @@
 package repository;
-import entity.Message;
+import entity.AuditLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MessageRepository extends JpaRepository<Message, Long> {
+public interface AuditLogRepository extends JpaRepository<AuditLog, Long> {
 
 }

@@ -3,7 +3,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "session")
-public class Session {
+public class Session extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "session_id", nullable = false, updatable = false)
