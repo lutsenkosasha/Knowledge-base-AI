@@ -7,9 +7,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "file")
-@NoArgsConstructor
 @RequiredArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @ToString

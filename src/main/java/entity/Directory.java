@@ -10,9 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "directory")
-@NoArgsConstructor
 @RequiredArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @ToString
