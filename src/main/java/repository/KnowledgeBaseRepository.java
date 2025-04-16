@@ -1,4 +1,9 @@
 package repository;
+import entity.KnowledgeBase;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public class KnowledgeBaseRepository {
+@Repository
+public interface KnowledgeBaseRepository extends JpaRepository<KnowledgeBase, Long> {
+
 }

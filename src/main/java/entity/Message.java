@@ -5,7 +5,7 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "message")
-public class Message {
+public class Message extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
