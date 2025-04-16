@@ -16,6 +16,15 @@
             <column name="file_size" type="bigint" defaultValue="0">
                 <constraints nullable="false"/>
             </column>
+            <column name="directory_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
+        <addForeignKeyConstraint
+                baseTableName="file"
+                baseColumnNames="directory_id"
+                referencedTableName="directory"
+                referencedColumnNames="directory_id"
+                constraintName="fk_file_directory"/>
     </changeSet>
 </databaseChangeLog>
