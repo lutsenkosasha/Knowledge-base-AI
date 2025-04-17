@@ -1,4 +1,5 @@
 package entity;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -20,6 +21,10 @@ public class Message extends Auditable {
 
     @Column(name = "time", nullable = false)
     private LocalTime time;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "session_id", nullable = false)
+    private Session session;
 
     public Long getMessageId() {
         return messageId;
@@ -51,5 +56,13 @@ public class Message extends Auditable {
 
     public void setTime(LocalTime time) {
         this.time = time;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
     }
 }

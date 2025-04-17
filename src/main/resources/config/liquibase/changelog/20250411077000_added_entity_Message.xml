@@ -19,7 +19,17 @@
             <column name="time" type="time">
                 <constraints nullable="false"/>
             </column>
+            <column name="session_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="message"
+                baseColumnNames="session_id"
+                referencedTableName="session"
+                referencedColumnNames="session_id"
+                constraintName="fk_message_session"/>
 
     </changeSet>
 
