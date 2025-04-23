@@ -1,28 +1,35 @@
 package org.example.controller;
 
 import org.example.entity.Message;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.service.MessageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.example.service.MessageService;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/messages")
 public class MessageController {
 
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
 
-    @PostMapping
-    public ResponseEntity<Message> createMessage(@RequestBody Message message) {
-        return ResponseEntity.ok(messageService.createMessage(message, message.getSession().getSessionId()));
+    public MessageController(MessageService messageService) {
+        this.messageService = messageService;
     }
 
-    @PostMapping("/batch")
-    public ResponseEntity<List<Message>> createMessages(@RequestBody List<Message> messages) {
-        return ResponseEntity.ok(messageService.createMultipleMessages(messages));
+    @PostMapping("/session/{sessionId}")
+    public ResponseEntity<Message> createMessage(
+            @PathVariable Long sessionId,
+            @RequestBody Message message
+    ) {
+        return ResponseEntity.ok(messageService.createMessage(message, sessionId));
+    }
+
+    @PostMapping("/batch/session/{sessionId}")
+    public ResponseEntity<List<Message>> createMessages(
+            @PathVariable Long sessionId,
+            @RequestBody List<Message> messages
+    ) {
+        return ResponseEntity.ok(messageService.createMultipleMessages(messages, sessionId));
     }
 
     @GetMapping("/{id}")
@@ -38,7 +45,10 @@ public class MessageController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Message> updateMessage(@PathVariable Long id, @RequestBody Message message) {
+    public ResponseEntity<Message> updateMessage(
+            @PathVariable Long id,
+            @RequestBody Message message
+    ) {
         return ResponseEntity.ok(messageService.updateMessage(id, message));
     }
 

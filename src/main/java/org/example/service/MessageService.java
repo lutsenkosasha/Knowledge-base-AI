@@ -14,46 +14,52 @@ import java.util.Optional;
 @Service
 public class MessageService {
 
-    @Autowired
-    private MessageRepository messageRepository;
+    private final MessageRepository messageRepository;
+    private final SessionRepository sessionRepository;
+    private final AuditLogService auditLogService;
 
     @Autowired
-    private SessionRepository sessionRepository;
-
-    @Autowired
-    private AuditLogService auditLogService;
+    public MessageService(MessageRepository messageRepository,
+                          SessionRepository sessionRepository,
+                          AuditLogService auditLogService) {
+        this.messageRepository = messageRepository;
+        this.sessionRepository = sessionRepository;
+        this.auditLogService = auditLogService;
+    }
 
     @Transactional
     public Message createMessage(Message message, Long sessionId) {
         Session session = sessionRepository.findById(sessionId)
                 .orElseThrow(() -> new RuntimeException("Session not found: " + sessionId));
-        message.setSession(session);
+
+        session.addMessage(message);
         Message saved = messageRepository.save(message);
         auditLogService.log("Message", "CREATE", "Message created with id: " + saved.getMessageId());
         return saved;
     }
 
     @Transactional
-    public List<Message> createMultipleMessages(List<Message> messages) {
-        for (Message message : messages) {
-            if (message.getSession() == null || message.getSession().getSessionId() == null) {
-                throw new RuntimeException("Session must be specified for each message.");
-            }
-            Session session = sessionRepository.findById(message.getSession().getSessionId())
-                    .orElseThrow(() -> new RuntimeException("Session not found: " + message.getSession().getSessionId()));
+    public List<Message> createMultipleMessages(List<Message> messages, Long sessionId) {
+        Session session = sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new RuntimeException("Session not found: " + sessionId));
+
+        messages.forEach(message -> {
             message.setSession(session);
-        }
-        List<Message> saved = messageRepository.saveAll(messages);
-        auditLogService.log("Message", "BATCH_CREATE", saved.size() + " messages created.");
-        return saved;
+            messageRepository.save(message);
+            session.addMessage(message);
+        });
+
+        auditLogService.log("Message", "BATCH_CREATE", messages.size() + " messages created.");
+        return messages;
     }
 
     @Transactional
     public Message updateMessage(Long id, Message updatedMessage) {
         return messageRepository.findById(id).map(message -> {
-            message.setTextMessage(updatedMessage.getTextMessage());
+            message.setText(updatedMessage.getText());
             message.setDate(updatedMessage.getDate());
             message.setTime(updatedMessage.getTime());
+
             Message saved = messageRepository.save(message);
             auditLogService.log("Message", "UPDATE", "Message updated with id: " + saved.getMessageId());
             return saved;

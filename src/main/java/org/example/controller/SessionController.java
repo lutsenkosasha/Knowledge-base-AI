@@ -1,32 +1,37 @@
 package org.example.controller;
 
 import org.example.entity.Session;
+import org.example.entity.Message;
 import org.example.service.SessionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/sessions")
 public class SessionController {
 
-    @Autowired
-    private SessionService sessionService;
+    private final SessionService sessionService;
 
-    @PostMapping
-    public ResponseEntity<Session> createSession(@RequestBody Session session) {
-        return ResponseEntity.ok(sessionService.createSession(
-                session.getUser().getUserId(),
-                session.getMessage().getMessageId(),
-                session.getDirectory().getDirectoryId()
-        ));
+    public SessionController(SessionService sessionService) {
+        this.sessionService = sessionService;
     }
 
-    @PostMapping("/batch")
-    public ResponseEntity<List<Session>> createSessions(@RequestBody List<Session> sessions) {
-        return ResponseEntity.ok(sessionService.createMultipleSessions(sessions));
+    @PostMapping
+    public ResponseEntity<Session> createSession(
+            @RequestParam Long userId,
+            @RequestParam Long directoryId
+    ) {
+        return ResponseEntity.ok(sessionService.createSession(userId, directoryId));
+    }
+
+    @PostMapping("/{sessionId}/messages")
+    public ResponseEntity<Message> addMessageToSession(
+            @PathVariable Long sessionId,
+            @RequestBody Message message
+    ) {
+        sessionService.addMessageToSession(sessionId, message);
+        return ResponseEntity.ok(message);
     }
 
     @GetMapping("/{id}")
@@ -42,7 +47,10 @@ public class SessionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Session> updateSession(@PathVariable Long id, @RequestBody Session session) {
+    public ResponseEntity<Session> updateSession(
+            @PathVariable Long id,
+            @RequestBody Session session
+    ) {
         return ResponseEntity.ok(sessionService.updateSession(id, session));
     }
 
