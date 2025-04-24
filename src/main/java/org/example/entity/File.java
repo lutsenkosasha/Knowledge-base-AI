@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "file")
@@ -22,11 +23,17 @@ public class File extends Auditable {
     private String fileName;
 
     @Column(name = "file_size")
-    @NotNull
+    @ColumnDefault("0")
     @Min(value = 0)
     private Long fileSize;
 
     @ManyToOne()
     @JoinColumn(name = "directory_id")
     private Directory directory;
+
+    @PrePersist
+    public void prePersist(){
+        if(fileSize == null)
+            fileSize = 0L;
+    }
 }
