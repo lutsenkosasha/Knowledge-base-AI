@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class Directory extends Auditable {
     private Long directoryId;
 
     @Column(name = "count_files")
-    @NotNull
+    @ColumnDefault("0")
     @Min(value = 0)
     private Integer countFiles;
 
@@ -33,9 +34,18 @@ public class Directory extends Auditable {
     private String directoryName;
 
     @Column(name = "directory_size")
+    @ColumnDefault("0")
     @Min(value = 0)
     private Long directorySize;
 
     @OneToMany(mappedBy = "directory")
     private List<File> files;
+
+    @PrePersist
+    public void prePersist(){
+        if(directorySize == null)
+            directorySize = 0L;
+        if(countFiles == null)
+            countFiles = 0;
+    }
 }
