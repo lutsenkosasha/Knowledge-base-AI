@@ -10,7 +10,11 @@
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseAssistantManager">
-    <assistants />
+    <assistants>
+      <assistant-state connection-id="1fb3c2d1-f665-4435-904d-403437ae42d3" default-profile-name="" selected-profile-name="" selected-model-name="" assistant-type="GENERIC" selected-action="SHOW_SQL" availability="UNAVAILABLE" acknowledgement="NONE">
+        <messages />
+      </assistant-state>
+    </assistants>
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
     <autoscroll-to-editor value="false" />
@@ -20,7 +24,8 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="1fb3c2d1-f665-4435-904d-403437ae42d3">
-      <console name="Knowledge-base-AI" type="STANDARD" schema="" session="Main" />
+      <console name="Knowledge-base-AI" type="STANDARD" schema="public" session="Main"><![CDATA[INSERT INTO session (directory_id, session_id, user_id, created_date) 
+VALUES (1, 1, 1, NOW());]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -31,6 +36,9 @@
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="1fb3c2d1-f665-4435-904d-403437ae42d3" />
+  </component>
+  <component name="DBNavigator.Project.ExecutionManager">
+    <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
@@ -552,5 +560,9 @@
         </visibility-settings>
       </environment>
     </general-settings>
+  </component>
+  <component name="DBNavigator.Project.StatementExecutionManager">
+    <execution-variables />
+    <execution-variable-types />
   </component>
 </project>

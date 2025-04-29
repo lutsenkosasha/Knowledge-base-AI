@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class MessageService {
-
     private final MessageRepository messageRepository;
     private final SessionRepository sessionRepository;
     private final AuditLogService auditLogService;
@@ -28,13 +29,34 @@ public class MessageService {
     }
 
     @Transactional
-    public Message createMessage(Message message, Long sessionId) {
+    public Message createUserMessage(String text, Long sessionId) {
+        Message message = new Message();
+        message.setText(text);
+        message.setDate(LocalDate.now());
+        message.setTime(LocalTime.now());
+        return saveMessageWithLogging(message, sessionId, "USER_MESSAGE");
+    }
+
+    @Transactional
+    public Message createBotMessage(String text, Long sessionId) {
+        Message message = new Message();
+        message.setText(text);
+        message.setDate(LocalDate.now());
+        message.setTime(LocalTime.now());
+        return saveMessageWithLogging(message, sessionId, "BOT_MESSAGE");
+    }
+
+    private Message saveMessageWithLogging(Message message, Long sessionId, String messageType) {
         Session session = sessionRepository.findById(sessionId)
                 .orElseThrow(() -> new RuntimeException("Session not found: " + sessionId));
 
+        message.setSession(session);
         session.addMessage(message);
+
         Message saved = messageRepository.save(message);
-        auditLogService.log("Message", "CREATE", "Message created with id: " + saved.getMessageId());
+        auditLogService.log("Message", "CREATE",
+                "Message (type: %s) created with id: %s".formatted(messageType, saved.getMessageId()));
+
         return saved;
     }
 
@@ -45,6 +67,8 @@ public class MessageService {
 
         messages.forEach(message -> {
             message.setSession(session);
+            message.setDate(LocalDate.now());
+            message.setTime(LocalTime.now());
             messageRepository.save(message);
             session.addMessage(message);
         });
@@ -57,8 +81,8 @@ public class MessageService {
     public Message updateMessage(Long id, Message updatedMessage) {
         return messageRepository.findById(id).map(message -> {
             message.setText(updatedMessage.getText());
-            message.setDate(updatedMessage.getDate());
-            message.setTime(updatedMessage.getTime());
+            message.setDate(LocalDate.now());
+            message.setTime(LocalTime.now());
 
             Message saved = messageRepository.save(message);
             auditLogService.log("Message", "UPDATE", "Message updated with id: " + saved.getMessageId());
@@ -80,3 +104,4 @@ public class MessageService {
         return messageRepository.findAll();
     }
 }
+

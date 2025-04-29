@@ -16,12 +16,20 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @PostMapping("/session/{sessionId}")
-    public ResponseEntity<Message> createMessage(
+    @PostMapping("/user/{sessionId}")
+    public ResponseEntity<Message> createUserMessage(
             @PathVariable Long sessionId,
-            @RequestBody Message message
+            @RequestBody String text
     ) {
-        return ResponseEntity.ok(messageService.createMessage(message, sessionId));
+        return ResponseEntity.ok(messageService.createUserMessage(text, sessionId));
+    }
+
+    @PostMapping("/bot/{sessionId}")
+    public ResponseEntity<Message> createBotMessage(
+            @PathVariable Long sessionId,
+            @RequestBody String text
+    ) {
+        return ResponseEntity.ok(messageService.createBotMessage(text, sessionId));
     }
 
     @PostMapping("/batch/session/{sessionId}")
