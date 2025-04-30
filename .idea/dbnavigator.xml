@@ -24,15 +24,32 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="1fb3c2d1-f665-4435-904d-403437ae42d3">
-      <console name="Knowledge-base-AI" type="STANDARD" schema="public" session="Main"><![CDATA[INSERT INTO session (directory_id, session_id, user_id, created_date) 
-VALUES (1, 1, 1, NOW());]]></console>
+      <console name="Knowledge-base-AI" type="STANDARD" schema="public" session="Main"><![CDATA[INSERT INTO directory (
+    count_files, 
+    created_date, 
+    directory_id, 
+    directory_size, 
+    modified_date, 
+    department, 
+    directory_name
+) VALUES (
+    0, 
+    CURRENT_TIMESTAMP, 
+    1, 
+    0, 
+    CURRENT_TIMESTAMP, 
+    'IT', 
+    'Test'
+);]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="1fb3c2d1-f665-4435-904d-403437ae42d3" object-ref="consoles/Knowledge-base-AI" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="1fb3c2d1-f665-4435-904d-403437ae42d3" />
