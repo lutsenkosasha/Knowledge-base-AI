@@ -1,9 +1,14 @@
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
-@Table(name = "\"user\"")
+@Table(name = "users")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +32,10 @@ public class User extends Auditable {
 
     @Column(name = "post")
     private String post;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference("user-sessions")
+    private List<Session> sessions;
 
     public User() {}
 

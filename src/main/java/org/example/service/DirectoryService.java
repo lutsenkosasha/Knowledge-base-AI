@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DirectoryService {
@@ -28,5 +29,9 @@ public class DirectoryService {
         directoryRepository.save(directory);
         auditLogService.log("Directory", "CREATE", "Directory created with id: "
                 + directory.getDirectoryId());
+    }
+
+    public Optional<Directory> findById(Long directoryId) {
+        return directoryRepository.findById(directoryId);
     }
 }
