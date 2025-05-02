@@ -25,10 +25,11 @@ public class DirectoryService {
         return directoryRepository.findAllByDepartment(department);
     }
     @Transactional
-    public void save(Directory directory){
-        directoryRepository.save(directory);
+    public Directory save(Directory directory){
+        Directory saved = directoryRepository.save(directory);
         auditLogService.log("Directory", "CREATE", "Directory created with id: "
                 + directory.getDirectoryId());
+        return saved;
     }
 
     public Optional<Directory> findById(Long directoryId) {

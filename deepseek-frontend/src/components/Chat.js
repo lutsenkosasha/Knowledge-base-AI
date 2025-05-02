@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {useNavigate, useParams} from 'react-router-dom';
 
 const Chat = () => {
+  const {id} = useParams();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [sessionId, setSessionId] = useState(null);
@@ -17,7 +19,7 @@ const Chat = () => {
               const response = await axios.post('/api/sessions', null, {
                   params: {
                       userId: 1,
-                      directoryId: 1
+                      directoryId: id
                   }
               });
 
