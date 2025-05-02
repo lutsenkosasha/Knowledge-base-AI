@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.example.service.DirectoryService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/directories")
@@ -22,17 +23,21 @@ public class DirectoryController {
         return directoryService.findAll();
     }
 
+    @GetMapping("/{id}")
+    private ResponseEntity<Directory> findById(@PathVariable Long id){
+        return directoryService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/findByDepartment")
     private List<Directory> findDirectoriesOfDepartment(@RequestParam String department){
         return directoryService.findByDepartment(department);
     }
 
-    @PostMapping("/add")
-    private ResponseEntity<HttpStatus> create(@RequestBody @Valid Directory directory, BindingResult bindingResult){
+    @PostMapping()
+    private ResponseEntity<Directory> create(@RequestBody @Valid Directory directory, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        directoryService.save(directory);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok(directoryService.save(directory));
     }
 }
