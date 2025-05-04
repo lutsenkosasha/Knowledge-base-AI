@@ -6,6 +6,8 @@ import org.example.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FileService {
     @Autowired
@@ -14,8 +16,14 @@ public class FileService {
     private AuditLogService auditLogService;
 
     @Transactional
-    public void save(File file){
-        fileRepository.save(file);
-        auditLogService.log("File", "CREATE", "File created with id: " + file.getFile_id());
+    public File save(File file){
+        File savedFile = fileRepository.save(file);
+        auditLogService.log("File", "CREATE", "File created with id: " + file.getFileId());
+        return savedFile;
+    }
+
+    @Transactional
+    public List<File> findAllFromDirectory(Long directoryId){
+        return fileRepository.findAllByDirectory_DirectoryId(directoryId);
     }
 }

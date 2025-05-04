@@ -40,8 +40,8 @@ public class Directory extends Auditable {
     @Min(value = 0)
     private Long directorySize;
 
-    @OneToMany(mappedBy = "directory")
-    private List<File> files;
+//    @OneToMany(mappedBy = "directory")
+//    private List<File> files;
 
     @PrePersist
     public void prePersist(){
