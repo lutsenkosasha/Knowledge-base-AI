@@ -6,6 +6,7 @@ import Directory from './pages/Directory';
 import LoginPage from './pages/LoginPage';
 import AdminPanelPage from './pages/AdminPanelPage';
 import './App.css';
+import AllFiles from './pages/AllFiles';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/chat/:id" element={<Chat />} />
       <Route path="/directories" element={<AllDirectories />} />
       <Route path="/directories/:id" element={<Directory />} />
+      {/* <Route path="/files/:id" element={<AllFiles />} /> */}
     </Routes>
   );
 }

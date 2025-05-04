@@ -16,7 +16,7 @@ public class File extends Auditable {
     @Id
     @Column(name = "file_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long file_id;
+    private Long fileId;
 
     @Column(name = "file_name")
     @NotNull

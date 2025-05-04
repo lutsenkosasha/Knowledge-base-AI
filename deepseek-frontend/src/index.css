@@ -12,24 +12,24 @@ code {
     monospace;
 }
 
-.directory img {
+.directory img, .file img {
     height: 50px;
     width: 50px;
 }
-.directory {
+.directory, .file {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
     cursor: pointer;
 }
-.all-directories {
+.all-directories, .all-files {
     display: flex;
     align-items: center;
     gap: 16px;
     flex-wrap: wrap;
 }
-.all-directories-container{
+.all-directories-container, .all-files-container{
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -39,7 +39,7 @@ code {
     margin: 0 auto;
     padding: 20px 10px;
 }
-.all-directories-header{
+.all-directories-header, .all-files-header{
     font-size: 28px;
     font-weight: 500;
     text-align: center;
@@ -47,7 +47,7 @@ code {
     padding-bottom: 8px;
     width: 100%;
 }
-.create-directory{
+.create-directory, .create-file{
     display: flex;
     align-items: center;
     gap: 8px;
