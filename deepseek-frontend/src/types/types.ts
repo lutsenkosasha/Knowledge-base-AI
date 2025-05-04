@@ -4,7 +4,13 @@ export interface Directory {
     department: string;
     directoryName: string;
     directorySize: number;
-    files: any[]; 
+  }
+
+  export interface DirectoryFile {
+    fileId: number;
+    fileName: string;
+    fileSize: number;
+    directory: Directory; 
   }
 
 export interface Message {

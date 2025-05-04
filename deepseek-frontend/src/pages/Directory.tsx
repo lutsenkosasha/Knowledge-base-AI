@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from '../api/axiosInstance';
 import {useNavigate, useParams} from 'react-router-dom';
 import type { Directory as DirectoryType } from '../types/types';
+import AllFiles from './AllFiles';
 
 const Directory = () => {
     const navigate = useNavigate();
@@ -24,6 +25,7 @@ const Directory = () => {
         <div>Отдел: {directory?.department}</div>
         <div>Имя папки: {directory?.directoryName}</div>
         <button onClick = {()=> {navigate(`/chat/${id}`)}}>Задать вопрос чат-боту</button>
+        <AllFiles/>
     </div>
     )
 }
