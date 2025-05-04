@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from '../api/axiosInstance';
 import {useParams} from 'react-router-dom';
 import type { Message } from '../types/types';
+import { useSelector } from 'react-redux';
 
 const Chat = () => {
   const {id} = useParams();
+  const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [sessionId, setSessionId] = useState<number | null>(null);
@@ -12,7 +14,8 @@ const Chat = () => {
     userName: '',
     directoryName: ''
   });
-
+  const user = useSelector((state: any) => (state.auth?.user?.id))
+  console.log(user);
 
   useEffect(() => {
       const initializeSession = async () => {
@@ -45,6 +48,7 @@ const Chat = () => {
     if (!input.trim() || !sessionId) return;
 
     try {
+      setLoading(true);
       await axios.post(`/chat/${sessionId}`, { message: input });
 
       const response = await axios.get(`/messages?sessionId=${sessionId}`);
@@ -53,6 +57,8 @@ const Chat = () => {
       setInput('');
     } catch (error) {
       console.error('Ошибка:', error);
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -71,6 +77,7 @@ const Chat = () => {
             {msg.text}
           </div>
         ))}
+        {loading && ("Подождите, ответ на ваш вопрос генерируется...")}
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -80,7 +87,7 @@ const Chat = () => {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Введите сообщение..."
         />
-        <button type="submit">Отправить</button>
+        <button type="submit" disabled = {loading}>Отправить</button>
       </form>
     </div>
   );
