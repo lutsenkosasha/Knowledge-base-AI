@@ -33,7 +33,7 @@ public class MessageService {
         Message message = new Message();
         message.setText(text);
         message.setDate(LocalDate.now());
-        message.setTime(LocalTime.now());
+        message.setTime(LocalTime.of(0, 0));
         return saveMessageWithLogging(message, sessionId, "USER_MESSAGE");
     }
 
@@ -42,7 +42,7 @@ public class MessageService {
         Message message = new Message();
         message.setText(text);
         message.setDate(LocalDate.now());
-        message.setTime(LocalTime.now());
+        message.setTime(LocalTime.of(0, 0));
         return saveMessageWithLogging(message, sessionId, "BOT_MESSAGE");
     }
 
