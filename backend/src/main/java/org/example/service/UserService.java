@@ -42,11 +42,14 @@ public class UserService {
     public User updateUser(Long id, User updatedUser) {
         return userRepository.findById(id).map(user -> {
             user.setEmail(updatedUser.getEmail());
-            user.setPassword(updatedUser.getPassword());
+            if (!user.getPassword().equals(updatedUser.getPassword())) {
+                user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+            }
             user.setName(updatedUser.getName());
             user.setSurname(updatedUser.getSurname());
             user.setDepartment(updatedUser.getDepartment());
             user.setPost(updatedUser.getPost());
+            user.setIsAdmin(updatedUser.getIsAdmin());
             User saved = userRepository.save(user);
             auditLogService.log("User", "UPDATE", "User updated with id: " + saved.getUserId());
             return saved;

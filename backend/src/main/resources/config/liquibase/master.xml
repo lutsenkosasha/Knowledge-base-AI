@@ -12,5 +12,6 @@
     <include file="changelog/20250411077000_added_entity_Message.xml" relativeToChangelogFile="true"/>
     <include file="changelog/20250411075000_added_entity_Knowledge_base.xml" relativeToChangelogFile="true"/>
     <include file="changelog/20250411074001_added_entity_Administrator.xml" relativeToChangelogFile="true"/>
-
+    <include file="changelog/20250505165700_delete_entity_Administrator.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20250505165701_update_entity_User.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

@@ -11,7 +11,7 @@ const AllFiles = () => {
     const navigate = useNavigate();
     useEffect(() => {
       const getFiles = async() => {
-          const response = await axios.get(`/files/${id}`);
+          const response = await axios.get(`api/files/${id}`);
           setFiles(response.data);
     }
     getFiles();
@@ -21,7 +21,7 @@ const AllFiles = () => {
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try{
-            const response = await axios.post(`/files`, {fileName, directoryId: id});
+            const response = await axios.post(`api/files`, {fileName, directoryId: id});
             setFileName("");
             setFiles(prev => ([response.data, ...prev]));
         }catch(error){
