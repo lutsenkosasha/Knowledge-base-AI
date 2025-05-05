@@ -11,7 +11,7 @@ const Directory = () => {
       useEffect(() => {
           const getDirectory = async() => {
           try{
-              const response = await axios.get(`api/directories/${id}`);
+              const response = await axios.get(`directories/${id}`);
               setDirectory(response.data);
           }catch(error){
             navigate(-1);
@@ -24,7 +24,7 @@ const Directory = () => {
     <div className = "all-directories-container">
         <div>Отдел: {directory?.department}</div>
         <div>Имя папки: {directory?.directoryName}</div>
-        <button onClick = {()=> {navigate(`api/chat/${id}`)}}>Задать вопрос чат-боту</button>
+        <button onClick = {()=> {navigate(`/chat/${id}`)}}>Задать вопрос чат-боту</button>
         <AllFiles/>
     </div>
     )

@@ -8,7 +8,7 @@ const AllDirectories = () => {
   const navigate = useNavigate();
   useEffect(() => {
       const getDirectories = async() => {
-          const response = await axios.get(`api/directories/findAll`);
+          const response = await axios.get(`directories/findAll`);
           setDirectories(response.data);
     }
     getDirectories();
@@ -19,7 +19,7 @@ const AllDirectories = () => {
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try{
-            const response = await axios.post(`api/directories`, {department, directoryName});
+            const response = await axios.post(`directories`, {department, directoryName});
             setDepartment("");
             setDirectoryName("");
             setDirectories(prev => ([response.data, ...prev]));
@@ -38,7 +38,7 @@ return (
         <div className = "all-directories">
         {!!(directories.length === 0) && 'Корпоративная база знаний пуста'}
         {directories.map((directory) => (
-            <div className = "directory" onClick = {()=> {navigate(`api/directories/${directory.directoryId}`)}}><img src = "https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt=""/>{directory.directoryName}</div>
+            <div className = "directory" onClick = {()=> {navigate(`/directories/${directory.directoryId}`)}}><img src = "https://cdn-icons-png.flaticon.com/512/3767/3767084.png" alt=""/>{directory.directoryName}</div>
         ))}
         </div>
     </div>

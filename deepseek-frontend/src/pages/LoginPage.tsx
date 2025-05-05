@@ -18,6 +18,7 @@ const LoginPage = () => {
       const data = await loginUser(email, password);
       const parsed = parseJwt(data.token);
       dispatch(login(data));
+      localStorage.setItem('token', data.token);
       navigate(parsed.isAdmin ? '/admin' : '/directories');
     } catch (err) {
       alert('Ошибка авторизации');
