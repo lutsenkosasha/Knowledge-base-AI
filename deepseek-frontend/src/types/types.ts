@@ -20,3 +20,10 @@ export interface Message {
     time: string;
     type: 'user' | 'bot';
   }
+
+  export interface UserFormData {
+    id?: number;
+    name?: string;
+    email?: string;
+    password?: string;
+  }

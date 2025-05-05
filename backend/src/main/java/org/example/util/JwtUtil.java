@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.annotation.PostConstruct;
+import org.example.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -29,12 +30,14 @@ public class JwtUtil {
     }
 
     // Генерация токена
-    public String generateToken(String email) {
+    public String generateToken(CustomUserDetails userDetails) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expirationMillis);
 
         return Jwts.builder()
-                .subject(email)
+                .subject(userDetails.getEmail())
+                .claim("isAdmin", userDetails.getIsAdmin())
+                .claim("userId", userDetails.getUserId())
                 .issuedAt(now)
                 .expiration(expiryDate)
                 .signWith(secretKey, SignatureAlgorithm.HS256)

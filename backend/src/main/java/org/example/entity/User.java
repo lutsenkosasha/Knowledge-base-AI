@@ -33,6 +33,9 @@ public class User extends Auditable {
     @Column(name = "post")
     private String post;
 
+    @Column(name = "is_admin", nullable = false)
+    private boolean isAdmin = false;
+
     @OneToMany(mappedBy = "user")
     @JsonManagedReference("user-sessions")
     private List<Session> sessions;
@@ -70,5 +73,9 @@ public class User extends Auditable {
     public String getPost() { return post; }
 
     public void setPost(String post) { this.post = post; }
+
+    public boolean getIsAdmin() { return isAdmin; }
+
+    public void setIsAdmin(boolean isAdmin) { this.isAdmin = isAdmin; }
 
 }

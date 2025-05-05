@@ -20,7 +20,7 @@ const Chat = () => {
   useEffect(() => {
       const initializeSession = async () => {
           try {
-              const response = await axios.post('/sessions', null, {
+              const response = await axios.post('api/sessions', null, {
                   params: {
                       userId: 1,
                       directoryId: id
@@ -49,9 +49,9 @@ const Chat = () => {
 
     try {
       setLoading(true);
-      await axios.post(`/chat/${sessionId}`, { message: input });
+      await axios.post(`api/chat/${sessionId}`, { message: input });
 
-      const response = await axios.get(`/messages?sessionId=${sessionId}`);
+      const response = await axios.get(`api/messages?sessionId=${sessionId}`);
       setMessages(response.data);
 
       setInput('');
