@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -28,6 +29,7 @@ public class File extends Auditable {
     private Long fileSize;
 
     @ManyToOne()
+    @JsonBackReference
     @JoinColumn(name = "directory_id")
     private Directory directory;
 

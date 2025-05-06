@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -40,8 +41,9 @@ public class Directory extends Auditable {
     @Min(value = 0)
     private Long directorySize;
 
-//    @OneToMany(mappedBy = "directory")
-//    private List<File> files;
+    @OneToMany(mappedBy = "directory", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<File> files;
 
     @PrePersist
     public void prePersist(){
