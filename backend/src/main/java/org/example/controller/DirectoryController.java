@@ -40,4 +40,16 @@ public class DirectoryController {
         }
         return ResponseEntity.ok(directoryService.save(directory));
     }
+
+    @DeleteMapping("/{id}")
+    private ResponseEntity<Void> delete(@PathVariable Long id){
+        directoryService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    private ResponseEntity<Directory> update(@PathVariable Long id, @RequestBody Directory updatedDirectory){
+        Directory updated = directoryService.update(id, updatedDirectory);
+        return ResponseEntity.ok(updated);
+    }
 }

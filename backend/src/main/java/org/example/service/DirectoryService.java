@@ -31,8 +31,23 @@ public class DirectoryService {
                 + directory.getDirectoryId());
         return saved;
     }
-
+    @Transactional
     public Optional<Directory> findById(Long directoryId) {
         return directoryRepository.findById(directoryId);
+    }
+
+    @Transactional
+    public void delete(Long id){
+        directoryRepository.deleteById(id);
+    }
+    @Transactional
+    public Directory update(Long id, Directory updatedDirectory){
+        return directoryRepository.findById(id).map(directory -> {
+            directory.setDirectoryName(updatedDirectory.getDirectoryName());
+            directory.setDepartment(updatedDirectory.getDepartment());
+            auditLogService.log("Directory", "UPDATE", "Directory created with id: "
+                    + directory.getDirectoryId());
+            return directoryRepository.save(directory);
+        }).orElseThrow(()-> new RuntimeException("Directory not found"));
     }
 }
