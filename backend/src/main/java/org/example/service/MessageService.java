@@ -96,6 +96,16 @@ public class MessageService {
         auditLogService.log("Message", "DELETE", "Message deleted with id: " + id);
     }
 
+    @Transactional
+    public void deleteMessagesBySessionId(Long sessionId) {
+        messageRepository.deleteBySession_SessionId(sessionId);
+        auditLogService.log("Message", "DELETE_ALL", "All messages deleted for session: " + sessionId);
+    }
+
+    public List<Message> getMessagesBySessionId(Long sessionId) {
+        return messageRepository.findBySessionId(sessionId);
+    }
+
     public Optional<Message> getMessage(Long id) {
         return messageRepository.findById(id);
     }

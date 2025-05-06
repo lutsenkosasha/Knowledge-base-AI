@@ -48,8 +48,10 @@ public class MessageController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Message>> getAllMessages() {
-        return ResponseEntity.ok(messageService.getAllMessages());
+    public ResponseEntity<List<Message>> getMessagesBySession(
+            @RequestParam Long sessionId) {
+
+        return ResponseEntity.ok(messageService.getMessagesBySessionId(sessionId));
     }
 
     @PutMapping("/{id}")
@@ -63,6 +65,12 @@ public class MessageController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMessage(@PathVariable Long id) {
         messageService.deleteMessage(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/session/{sessionId}")
+    public ResponseEntity<Void> deleteMessagesBySessionId(@PathVariable Long sessionId) {
+        messageService.deleteMessagesBySessionId(sessionId);
         return ResponseEntity.noContent().build();
     }
 }

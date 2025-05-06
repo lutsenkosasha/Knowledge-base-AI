@@ -22,33 +22,48 @@ public class SessionService {
     private final UserRepository userRepository;
     private final DirectoryRepository directoryRepository;
     private final AuditLogService auditLogService;
+    private final MessageService messageService;
+    private final MessageRepository messageRepository;
 
     @Autowired
     public SessionService(SessionRepository sessionRepository,
                           UserRepository userRepository,
                           DirectoryRepository directoryRepository,
-                          AuditLogService auditLogService) {
+                          AuditLogService auditLogService, MessageService messageService, MessageRepository messageRepository) {
         this.sessionRepository = sessionRepository;
         this.userRepository = userRepository;
         this.directoryRepository = directoryRepository;
         this.auditLogService = auditLogService;
+        this.messageService = messageService;
+        this.messageRepository = messageRepository;
     }
 
     @Transactional
-    public Session createSession(Long userId, Long directoryId) {
+    public Session getOrCreateSession(Long userId, Long directoryId) {
+        List<Session> sessions = sessionRepository.findAllByUserAndDirectory(userId, directoryId);
+
+        if (!sessions.isEmpty()) {
+            if (sessions.size() > 1) {
+                sessions.stream().skip(1).forEach(s -> {
+                    messageService.deleteMessagesBySessionId(s.getSessionId());
+                    sessionRepository.delete(s);
+                });
+            }
+            return sessions.get(0);
+        }
+
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found: " + userId));
+                .orElseThrow(() -> new RuntimeException("User not found"));
         Directory directory = directoryRepository.findById(directoryId)
-                .orElseThrow(() -> new RuntimeException("Directory not found: " + directoryId));
+                .orElseThrow(() -> new RuntimeException("Directory not found"));
 
         Session session = new Session();
         session.setUser(user);
         session.setDirectory(directory);
 
-        Session saved = sessionRepository.save(session);
-        auditLogService.log("Session", "CREATE", "Session created with id: " + saved.getSessionId());
-        return saved;
+        return sessionRepository.save(session);
     }
+
 
     @Transactional
     public Session updateSession(Long id, Session updatedSession) {
@@ -94,4 +109,10 @@ public class SessionService {
                 .orElseThrow(() -> new RuntimeException("Session not found"));
         session.addMessage(message);
     }
+
+    @Transactional
+    public void deleteMessagesBySessionId(Long sessionId) {
+        messageRepository.deleteBySession_SessionId(sessionId);
+    }
+
 }

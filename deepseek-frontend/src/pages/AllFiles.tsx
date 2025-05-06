@@ -7,7 +7,7 @@ import {useParams} from 'react-router-dom';
 const AllFiles = () => {
     const [files, setFiles] = useState<DirectoryFile[]>([]);
     const {id} = useParams();
-    
+
     const navigate = useNavigate();
     useEffect(() => {
       const getFiles = async() => {

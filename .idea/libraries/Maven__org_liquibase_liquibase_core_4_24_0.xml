@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Maven: org.liquibase:liquibase-core:4.24.0" type="java-imported" external-system-id="Maven">
+    <properties groupId="org.liquibase" artifactId="liquibase-core" version="4.24.0" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/liquibase/liquibase-core/4.24.0/liquibase-core-4.24.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/liquibase/liquibase-core/4.24.0/liquibase-core-4.24.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/liquibase/liquibase-core/4.24.0/liquibase-core-4.24.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
