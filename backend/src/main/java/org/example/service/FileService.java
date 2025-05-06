@@ -26,4 +26,23 @@ public class FileService {
     public List<File> findAllFromDirectory(Long directoryId){
         return fileRepository.findAllByDirectory_DirectoryId(directoryId);
     }
+
+    @Transactional
+    public List<File> findAll(){
+        return fileRepository.findAll();
+    }
+
+    @Transactional
+    public void delete(Long id){
+        fileRepository.deleteById(id);
+    }
+
+    @Transactional
+    public File update(Long id, File updatedFile){
+        return fileRepository.findById(id).map(file -> {
+            file.setFileName(updatedFile.getFileName());
+            auditLogService.log("File", "UPDATE", "File created with id: " + file.getFileId());
+            return fileRepository.save(file);
+        }).orElseThrow(() -> new RuntimeException("file not found"));
+    }
 }
