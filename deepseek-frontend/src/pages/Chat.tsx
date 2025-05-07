@@ -20,7 +20,7 @@ const Chat = () => {
   useEffect(() => {
       const initializeSession = async () => {
           try {
-              const response = await axios.post('sessions', null, {
+              const response = await axios.post('/sessions', null, {
                   params: {
                       userId: user,
                       directoryId: id
@@ -33,14 +33,20 @@ const Chat = () => {
                   directoryName: response.data.directoryName
               });
 
+              const messagesResponse = await axios.get(
+                `/messages?sessionId=${response.data.sessionId}`
+              );
+
+              setMessages(messagesResponse.data);
+
           } catch (error) {
               console.error('Ошибка при создании сессии:', error);
           }
       };
-      if (id) {
+      if (id && user) {
         initializeSession();
       }
-  }, [id]);
+  }, [id, user]);
 
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -49,9 +55,9 @@ const Chat = () => {
 
     try {
       setLoading(true);
-      await axios.post(`chat/${sessionId}`, { message: input });
+      await axios.post(`/chat/${sessionId}`, { message: input });
 
-      const response = await axios.get(`messages?sessionId=${sessionId}`);
+      const response = await axios.get(`/messages?sessionId=${sessionId}`);
       setMessages(response.data);
 
       setInput('');
@@ -61,6 +67,20 @@ const Chat = () => {
       setLoading(false);
     }
   };
+///*
+  const handleClearHistory = async () => {
+      if (!sessionId || !window.confirm("Вы уверены, что хотите очистить историю?")) return;
+
+      try {
+        await axios.delete(`/messages/session/${sessionId}`);
+        setMessages([]);
+        alert("История сообщений очищена");
+      } catch (error) {
+        console.error('Ошибка при очистке истории:', error);
+        alert("Не удалось очистить историю");
+      }
+    };
+//*/
 
   return (
     <div className="chat-container">
@@ -69,6 +89,13 @@ const Chat = () => {
         <div className="session-info">
           <span>Пользователь: {sessionInfo.userName}</span>
           <span>Директория: {sessionInfo.directoryName}</span>
+          <button
+              onClick={handleClearHistory}
+              disabled={!sessionId}
+              className="clear-history-btn"
+          >
+             Очистить историю
+          </button>
         </div>
       </div>
       <div className="messages">

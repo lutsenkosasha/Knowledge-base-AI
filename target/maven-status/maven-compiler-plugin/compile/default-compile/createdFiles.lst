@@ -1,0 +1,10 @@
+org\example\entity\Directory.class
+org\example\config\AppConfig.class
+org\example\entity\Auditable.class
+org\example\entity\KnowledgeBase.class
+org\example\entity\User.class
+org\example\service\AdministratorService.class
+org\example\entity\Administrator.class
+org\example\App.class
+org\example\controller\AdministratorController.class
+org\example\entity\File.class

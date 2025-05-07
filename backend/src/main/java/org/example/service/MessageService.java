@@ -33,7 +33,7 @@ public class MessageService {
         Message message = new Message();
         message.setText(text);
         message.setDate(LocalDate.now());
-        message.setTime(LocalTime.now());
+        message.setTime(LocalTime.of(0, 0));
         return saveMessageWithLogging(message, sessionId, "USER_MESSAGE");
     }
 
@@ -42,7 +42,7 @@ public class MessageService {
         Message message = new Message();
         message.setText(text);
         message.setDate(LocalDate.now());
-        message.setTime(LocalTime.now());
+        message.setTime(LocalTime.of(0, 0));
         return saveMessageWithLogging(message, sessionId, "BOT_MESSAGE");
     }
 
@@ -94,6 +94,16 @@ public class MessageService {
     public void deleteMessage(Long id) {
         messageRepository.deleteById(id);
         auditLogService.log("Message", "DELETE", "Message deleted with id: " + id);
+    }
+
+    @Transactional
+    public void deleteMessagesBySessionId(Long sessionId) {
+        messageRepository.deleteBySession_SessionId(sessionId);
+        auditLogService.log("Message", "DELETE_ALL", "All messages deleted for session: " + sessionId);
+    }
+
+    public List<Message> getMessagesBySessionId(Long sessionId) {
+        return messageRepository.findBySessionId(sessionId);
     }
 
     public Optional<Message> getMessage(Long id) {

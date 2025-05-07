@@ -39,7 +39,7 @@ public class SessionController {
         Directory directory = directoryService.findById(directoryId)
                 .orElseThrow(() -> new Exception("Directory not found"));
 
-        Session newSession = sessionService.createSession(userId, directoryId);
+        Session newSession = sessionService.getOrCreateSession(userId, directoryId);
         SessionDto dto = new SessionDto();
         dto.setSessionId(newSession.getSessionId());
         dto.setUserName(newSession.getUser().getName());
